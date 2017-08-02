@@ -40,7 +40,7 @@ UP_ARROW = "Up"
 LEFT_ARROW = "Left" 
 DOWN_ARROW = "Down" 
 RIGHT_ARROW = "Right" 
-TIME_STEP = 400 
+TIME_STEP = 50
 SPACEBAR = "space" 
 
 UP = 0
@@ -91,6 +91,7 @@ def make_food():
         food_stamps.append(food.stamp())
 
 def move_snake():
+    print(len(pos_list))
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos =my_pos[1]
@@ -121,6 +122,8 @@ def move_snake():
         food_stamps.pop(food_ind)
         print("You have eaten food!")
         make_food()
+        grow_snake()
+        
 
     old_stamp= stamp_list.pop(0)
     snake.clearstamp(old_stamp)
@@ -143,10 +146,10 @@ def move_snake():
         print("You hit the down edge! Game over!")
         quit()
 
-   if pos_list[-1] :
-       print("You ate yourself! Game over!")
-       quit()
-    
+    if pos_list[-1] in pos_list[0:-1]:
+        print("You ate yourself! Game over!")
+        quit()
+   
                            
         
 move_snake()
@@ -158,10 +161,17 @@ food.shape("trash.gif")
 food_pos= [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamp= []
 
+def grow_snake():
+    stamp2=snake.stamp()
+    stamp_list.append(stamp2)
+
+   
+
 for this_food_pos in food_pos:
     food.goto(this_food_pos)
     food_loc=food.stamp()
     food_stamps.append(food_loc)
+    
            
           
 
