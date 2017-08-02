@@ -157,7 +157,6 @@ move_snake()
 turtle.register_shape("trash.gif")
 food=turtle.clone()
 food.shape("trash.gif")
-
 food_pos= [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamp= []
 
