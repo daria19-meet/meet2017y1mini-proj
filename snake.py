@@ -1,6 +1,12 @@
 import turtle
 import random
 
+"""
+1. If snake moves left and you press right, it's treated as a collision. Fix it
+2. Make a counter that tells you how many foods you ate (and find a way to display it on the screen)
+3. Make a visible border, and make sure that all random foods generated are within this boundary
+"""
+
 turtle.tracer(1,0)
 
 SIZE_X=800
@@ -54,23 +60,27 @@ RIGHT_EDGE=400
 LEFT_EDGE=-400
 def up():
     global direction
-    direction=UP
-    print("You pressed the up key!")
+    if direction!= DOWN:
+        direction=UP
+        print("You pressed the up key!")
 
 def down():
     global direction
-    direction=DOWN
-    print("You pressed the down key!")
+    if direction != UP:
+        direction=DOWN
+        print("You pressed the down key!")
 
 def left():
     global direction
-    direction=LEFT
-    print("You pressed the left key!")
+    if direction != RIGHT:
+        direction=LEFT
+        print("You pressed the left key!")
 
 def right():
     global direction
-    direction=RIGHT
-    print("You pressed the right key!")
+    if direction != LEFT:
+        direction=RIGHT
+        print("You pressed the right key!")
 
 turtle.onkeypress(up,UP_ARROW)
 turtle.onkeypress(down,DOWN_ARROW)
@@ -91,7 +101,7 @@ def make_food():
         food_stamps.append(food.stamp())
 
 def move_snake():
-    print(len(pos_list))
+    print(pos_list)
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos =my_pos[1]
@@ -102,7 +112,7 @@ def move_snake():
         snake.goto(x_pos - SQUARE_SIZE, y_pos)
         print('You moved left!')
     elif direction==UP:
-        snake.goto(x_pos,y_pos+ SQUARE_SIZE)
+        snake.goto(x_pos,y_pos+SQUARE_SIZE)
         print('You moved up!')
     else:
         snake.goto(x_pos,y_pos-SQUARE_SIZE)
@@ -146,7 +156,7 @@ def move_snake():
         print("You hit the down edge! Game over!")
         quit()
 
-    if pos_list[-1] in pos_list[0:-1]:
+    if pos_list[-1] in pos_list[0:-3]:
         print("You ate yourself! Game over!")
         quit()
    
@@ -163,8 +173,6 @@ food_stamp= []
 def grow_snake():
     stamp2=snake.stamp()
     stamp_list.append(stamp2)
-
-   
 
 for this_food_pos in food_pos:
     food.goto(this_food_pos)
