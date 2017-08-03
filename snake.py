@@ -8,6 +8,7 @@ import random
 """
 
 turtle.tracer(1,0)
+turtle.bgcolor('red')
 
 SIZE_X=800
 SIZE_Y=500
@@ -25,6 +26,14 @@ food_pos =[]
 food_stamps= []
 snake=turtle.clone()
 snake.shape("square")
+snake.color("orange")
+turtle.goto(-300,200)
+turtle.pendown()
+turtle.goto(300,200)
+turtle.goto(300,-200)
+turtle.goto(-300,-200)
+turtle.goto(-300,200)
+turtle.penup()
 
 
 turtle.hideturtle()
@@ -89,16 +98,23 @@ turtle.onkeypress(right,RIGHT_ARROW)
 turtle.listen()
 
 def make_food():
-        min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
-        max_x=int(SIZE_X/2/SQUARE_SIZE)-1
-        min_y=-int(SIZE_Y/2/SQUARE_SIZE)-1
-        max_y=int(SIZE_Y/2/SQUARE_SIZE)+1
+        min_x=-int(300/2/SQUARE_SIZE)+1
+        max_x=int(300/2/SQUARE_SIZE)-1
+        min_y=-int(200/2/SQUARE_SIZE)-1
+        max_y=int(200/2/SQUARE_SIZE)+1
 
         food_x=random.randint(min_x,max_x)*SQUARE_SIZE
         food_y=random.randint(min_y,max_y)*SQUARE_SIZE
         food.goto(food_x,food_y)
         food_pos.append(food.pos())
         food_stamps.append(food.stamp())
+
+number_food=0
+def print_food():
+    global number_food
+    number_food+=1
+    turtle.write(number_food)
+    
 
 def move_snake():
     print(pos_list)
@@ -133,7 +149,7 @@ def move_snake():
         print("You have eaten food!")
         make_food()
         grow_snake()
-        
+        print_food()
 
     old_stamp= stamp_list.pop(0)
     snake.clearstamp(old_stamp)
